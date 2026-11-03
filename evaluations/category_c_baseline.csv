@@ -1,0 +1,383 @@
+﻿test_id,query,answer,policy_tool_called,transaction_tool_called,safety_gate_used,policy_chunks_found,retrieved_sources,tool_retrieval_pass,grounding_score,reviewer_notes,developer_trace
+C01,What is the process for submitting a card transaction dispute?,"**How to submit a card transaction dispute (DBS Singapore)**  
+
+1. **Open the DBS app (or website) and log in.**  
+2. **Navigate to your card section** – select the card you want to dispute.  
+3. **Choose the “Dispute” or “Fraud dispute” option** – this is the menu that leads to the dispute‑submission flow.  
+4. **Select the transaction(s) you want to dispute** – you can pick up to **15 transactions in one submission**. If you have more than 15, you’ll need to submit a second batch for the same card.  
+5. **Confirm the dispute** – review the details, then submit.  
+6. **Follow any on‑screen confirmation** – you’ll see a confirmation screen that indicates the dispute has been sent.  
+
+**Key points to remember**
+
+- A dispute can be filed for both **unauthorised** and **merchant‑related** charges.  
+- If you block a card through the fraud‑reporting flow, that card cannot be unblocked via the same process.  
+- The bank will monitor the reported transactions and act once they are posted to your account.  
+- Pending transactions are not the same as posted ones; the dispute process applies once the transaction is posted.  
+
+**What the DBS policy says**
+
+> “The guide states that up to **15 transactions** may be selected in one submission. If there are more than 15, a second submission may be required for the same card.”  
+> “The card blocked through the described fraud‑reporting flow cannot be unblocked through that process.”  
+> “DBS will monitor reported transactions and act once they are posted to the account.”  
+
+If you need more detailed navigation steps or have a specific situation (e.g., a large number of disputed transactions, a merchant dispute, or a pending transaction), please visit the official DBS website or contact DBS customer service for the most up‑to‑date instructions.
+
+---
+**Retrieved policy sources**
+- `03_dbs_transaction_disputes.md` (chunk 33, cosine similarity: 0.637)
+- `03_dbs_transaction_disputes.md` (chunk 28, cosine similarity: 0.593)
+- `03_dbs_transaction_disputes.md` (chunk 27, cosine similarity: 0.582)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"03_dbs_transaction_disputes.md (chunk 33, score 0.637); 03_dbs_transaction_disputes.md (chunk 28, score 0.593); 03_dbs_transaction_disputes.md (chunk 27, score 0.582)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""process for submitting a card transaction dispute""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 1
+
+Policy chunks retrieved:
+- 03_dbs_transaction_disputes.md | chunk 33 | similarity 0.637
+- 03_dbs_transaction_disputes.md | chunk 28 | similarity 0.593
+- 03_dbs_transaction_disputes.md | chunk 27 | similarity 0.582"
+C02,What happens after I report a card transaction dispute?,"When you file a card‑transaction dispute through the DBS digibank app (or other official channel), the bank follows a standard monitoring process:
+
+1. **Submission is logged** – The dispute is recorded in DBS’s system.  
+2. **Monitoring** – DBS will keep an eye on the transaction you flagged.  
+3. **Action upon posting** – Once the transaction is posted to your account (i.e., it moves from “pending” to “completed”), DBS will review the dispute and take the appropriate action, such as reversing the charge or issuing a refund.  
+4. **Pending vs. posted** – A pending transaction is not the same as a posted one; DBS will not cancel a pending transaction simply because it was disputed. The dispute resolution only applies once the transaction is posted.  
+
+If the dispute is for an unauthorised credit‑card transaction, the app may also block the card and arrange a replacement as part of the fraud‑reporting flow.  
+
+The policy does not specify a fixed time frame for resolution; DBS will act once the transaction is posted. If you need a status update, you can check the dispute status in the app or contact DBS customer support.
+
+---
+**Retrieved policy sources**
+- `03_dbs_transaction_disputes.md` (chunk 33, cosine similarity: 0.651)
+- `03_dbs_transaction_disputes.md` (chunk 27, cosine similarity: 0.616)
+- `03_dbs_transaction_disputes.md` (chunk 26, cosine similarity: 0.599)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"03_dbs_transaction_disputes.md (chunk 33, score 0.651); 03_dbs_transaction_disputes.md (chunk 27, score 0.616); 03_dbs_transaction_disputes.md (chunk 26, score 0.599)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""card transaction dispute process after reporting""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 1
+
+Policy chunks retrieved:
+- 03_dbs_transaction_disputes.md | chunk 33 | similarity 0.651
+- 03_dbs_transaction_disputes.md | chunk 27 | similarity 0.616
+- 03_dbs_transaction_disputes.md | chunk 26 | similarity 0.599"
+C03,What does the DBS Safety Switch do?,"**DBS Safety Switch**
+
+The Safety Switch is a security feature that lets you temporarily suspend access to certain banking services if you suspect you’re a victim of a scam or fraud. According to DBS:
+
+| What is suspended | What remains unaffected |
+|-------------------|------------------------|
+| • Online digibank (web) and digibank Mobile apps | • Deposits into current and savings accounts |
+| • PayLah! services | |
+| • Physical and digital transactions via ATM, debit and credit cards | |
+
+**Important points**
+
+1. **It does not block incoming funds** – transfers into your account can still arrive.  
+2. **Existing GIRO or pre‑authorised arrangements are not automatically stopped** – you may need to ask a Customer Service Officer to extend the suspension to those functions.  
+3. **After requesting the Safety Switch, stay on the hotline** so a DBS officer can confirm the request and help with any further steps.  
+
+*Source: DBS public guidance on scam prevention and fraud reporting (see “Understanding the DBS Safety Switch”).*
+
+---
+**Retrieved policy sources**
+- `02_dbs_fraud_reporting.md` (chunk 15, cosine similarity: 0.735)
+- `02_dbs_fraud_reporting.md` (chunk 14, cosine similarity: 0.702)
+- `02_dbs_fraud_reporting.md` (chunk 9, cosine similarity: 0.534)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"02_dbs_fraud_reporting.md (chunk 15, score 0.735); 02_dbs_fraud_reporting.md (chunk 14, score 0.702); 02_dbs_fraud_reporting.md (chunk 9, score 0.534)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""DBS Safety Switch""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 1
+
+Policy chunks retrieved:
+- 02_dbs_fraud_reporting.md | chunk 15 | similarity 0.735
+- 02_dbs_fraud_reporting.md | chunk 14 | similarity 0.702
+- 02_dbs_fraud_reporting.md | chunk 9 | similarity 0.534"
+C04,What are the steps for replacing a card through digibank?,"**Replacing a card via digibank (online)**  
+
+1. **Log in** to digibank Online on the official DBS website and complete the authentication process.  
+2. From the **Home** screen, tap **Cards** and choose the card you want to replace.  
+3. In the card‑details view, tap **Manage** and select **Replace lost or stolen card**.  
+4. Pick the type of replacement card you need and follow the guided instructions that appear in digibot to block the old card and request the new one.  
+
+These steps are taken from the DBS guide for replacing a lost or stolen card through digibank Online【search_policies:found=1, passages[0].source】.  
+
+If you prefer using the mobile app, the process is similar: open the app → **More** → **Manage Cards & Loans** → **Replace/Block Card** → choose **My Card is Lost** → proceed to block and then request a replacement. The app interface may change, so follow the latest prompts shown in the official DBS app【search_policies:found=1, passages[1].source】.  
+
+For any updates or additional details, refer to the current instructions in digibank or contact DBS customer support.
+
+---
+**Retrieved policy sources**
+- `04_dbs_lost_stolen_cards.md` (chunk 42, cosine similarity: 0.682)
+- `04_dbs_lost_stolen_cards.md` (chunk 41, cosine similarity: 0.654)
+- `04_dbs_lost_stolen_cards.md` (chunk 44, cosine similarity: 0.647)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"04_dbs_lost_stolen_cards.md (chunk 42, score 0.682); 04_dbs_lost_stolen_cards.md (chunk 41, score 0.654); 04_dbs_lost_stolen_cards.md (chunk 44, score 0.647)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""steps for replacing a card through digibank""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 1
+
+Policy chunks retrieved:
+- 04_dbs_lost_stolen_cards.md | chunk 42 | similarity 0.682
+- 04_dbs_lost_stolen_cards.md | chunk 41 | similarity 0.654
+- 04_dbs_lost_stolen_cards.md | chunk 44 | similarity 0.647"
+C05,"What is a pending card transaction, and what happens next?","A **pending card transaction** is a payment that has been approved by the merchant’s payment system but has not yet been fully settled (posted) to your DBS account.  
+When a transaction goes pending, DBS places a temporary hold on the amount (or on your available credit) so that the merchant can complete the sale later.
+
+**What happens next**
+
+| Step | What DBS does | What you can do |
+|------|---------------|-----------------|
+| 1. **Hold placed** | The amount is temporarily deducted from your available balance. | No action needed. |
+| 2. **Merchant completes the sale** | The transaction is posted (finalised) to your account. | If you notice a charge you don’t recognise, contact the merchant first. |
+| 3. **If the transaction is posted** | It becomes a normal debit on your statement. | You can file a dispute through DBS if you believe it is incorrect. |
+| 4. **If the transaction does not post** | The hold is released and you are not billed. | No further action required. |
+
+Key points from DBS policy:
+
+* A pending transaction **cannot be cancelled by DBS** once it has been approved.  
+* If the pending transaction does not get posted, you will not be billed.  
+* Once posted, the normal dispute process applies, and DBS will monitor the transaction and act once it appears on your account.  
+
+(These details are taken from DBS’s public guidance on pending card transactions.)
+
+---
+**Retrieved policy sources**
+- `03_dbs_transaction_disputes.md` (chunk 32, cosine similarity: 0.716)
+- `03_dbs_transaction_disputes.md` (chunk 33, cosine similarity: 0.670)
+- `05_dbs_fees_and_charges.md` (chunk 55, cosine similarity: 0.489)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"03_dbs_transaction_disputes.md (chunk 32, score 0.716); 03_dbs_transaction_disputes.md (chunk 33, score 0.670); 05_dbs_fees_and_charges.md (chunk 55, score 0.489)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""pending card transaction what happens next""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 1
+
+Policy chunks retrieved:
+- 03_dbs_transaction_disputes.md | chunk 32 | similarity 0.716
+- 03_dbs_transaction_disputes.md | chunk 33 | similarity 0.670
+- 05_dbs_fees_and_charges.md | chunk 55 | similarity 0.489"
+C06,What information should I prepare before submitting a transaction dispute?,"Before you lodge a dispute with DBS, it’s helpful to have the following details handy:
+
+| Item | Why it matters |
+|------|----------------|
+| **Transaction date** (as shown in the app or statement) | Helps DBS locate the exact entry. |
+| **Transaction amount and currency** | Confirms the value you’re disputing. |
+| **Merchant description** (the name that appears on your statement) | Identifies the business or service. |
+| **Status of the transaction** (pending vs. posted) | Determines whether the charge is still reversible. |
+| **Transaction ID or reference number** (if available) | Provides a unique identifier for the entry. |
+| **Whether a supplementary cardholder or family member could have used the card** | Rules out authorised use by someone else. |
+| **Whether you recognise the merchant or authorised the purchase** | Establishes whether the transaction is genuinely unfamiliar. |
+
+These items are the most useful information to have ready when you speak to DBS or submit a dispute online. They are not a mandatory checklist, but having them will speed up the investigation and help DBS resolve the issue more efficiently.
+
+---
+**Retrieved policy sources**
+- `03_dbs_transaction_disputes.md` (chunk 33, cosine similarity: 0.556)
+- `03_dbs_transaction_disputes.md` (chunk 22, cosine similarity: 0.637)
+- `03_dbs_transaction_disputes.md` (chunk 36, cosine similarity: 0.446)
+- `03_dbs_transaction_disputes.md` (chunk 25, cosine similarity: 0.517)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"03_dbs_transaction_disputes.md (chunk 33, score 0.556); 03_dbs_transaction_disputes.md (chunk 22, score 0.554); 03_dbs_transaction_disputes.md (chunk 36, score 0.510); 03_dbs_transaction_disputes.md (chunk 22, score 0.637); 03_dbs_transaction_disputes.md (chunk 25, score 0.517); 03_dbs_transaction_disputes.md (chunk 36, score 0.446)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""What information should I prepare before submitting a transaction dispute?""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: tool_calls
+
+TOOL CALL #2
+Selected tool: search_policies
+Raw arguments: {""question"":""First check whether the transaction is genuinely unfamiliar""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 3 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 2
+
+Policy chunks retrieved:
+- 03_dbs_transaction_disputes.md | chunk 33 | similarity 0.556
+- 03_dbs_transaction_disputes.md | chunk 22 | similarity 0.554
+- 03_dbs_transaction_disputes.md | chunk 36 | similarity 0.510
+- 03_dbs_transaction_disputes.md | chunk 22 | similarity 0.637
+- 03_dbs_transaction_disputes.md | chunk 25 | similarity 0.517
+- 03_dbs_transaction_disputes.md | chunk 36 | similarity 0.446"
+C07,What fees might apply to overseas debit card usage?,"**Fees that may apply when you use a DBS debit card overseas**
+
+| Transaction type | Fee components (as per DBS public information) | Notes |
+|------------------|-----------------------------------------------|-------|
+| **Overseas ATM withdrawals** | • 1 % conversion factor for Visa/Mastercard‑converted withdrawals.<br>• 0.6 % conversion factor for UnionPay‑converted withdrawals.<br>• An additional DBS administrative fee (exact amount not specified in the public summary). | The conversion factor is applied to the withdrawal amount. The administrative fee is separate and is added on top of the conversion factor. |
+| **Singapore‑dollar transactions processed outside Singapore** (e.g., online shopping, mobile apps) | • 1 % administrative fee charged by Visa or Mastercard. | This fee is for transactions that are still in Singapore dollars but are processed on overseas‑based platforms. |
+
+**Key points**
+
+1. The conversion factor and the DBS administrative fee are *not* interchangeable; both may apply to a single overseas ATM withdrawal.  
+2. The exact amount of the DBS administrative fee for overseas ATM withdrawals is not disclosed in the public summaries.  
+3. These fees are separate from any charges that the card‑network (Visa, Mastercard, UnionPay) may levy.
+
+If you need the precise fee amount for a particular transaction, you can check the transaction details in your DBS online banking or contact DBS customer service for confirmation.
+
+---
+**Retrieved policy sources**
+- `05_dbs_fees_and_charges.md` (chunk 62, cosine similarity: 0.651)
+- `05_dbs_fees_and_charges.md` (chunk 61, cosine similarity: 0.613)
+- `05_dbs_fees_and_charges.md` (chunk 58, cosine similarity: 0.599)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"05_dbs_fees_and_charges.md (chunk 62, score 0.651); 05_dbs_fees_and_charges.md (chunk 61, score 0.613); 05_dbs_fees_and_charges.md (chunk 58, score 0.599)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""fees overseas debit card usage""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 1
+
+Policy chunks retrieved:
+- 05_dbs_fees_and_charges.md | chunk 62 | similarity 0.651
+- 05_dbs_fees_and_charges.md | chunk 61 | similarity 0.613
+- 05_dbs_fees_and_charges.md | chunk 58 | similarity 0.599"
+C08,What are DBS's published contact channels for general enquiries?,"**DBS Personal Banking – general enquiry numbers**
+
+| Region | Phone number |
+|--------|--------------|
+| Singapore | **1800 111 1111** |
+| Overseas | **+65 6327 2265** |
+
+**POSB Personal Banking – general enquiry numbers**
+
+| Region | Phone number |
+|--------|--------------|
+| Singapore | **1800 339 6666** |
+| Overseas | **+65 6339 6666** |
+
+These are the general‑enquiry contact channels listed on the DBS contact page.  
+For digital support, DBS also offers:
+
+* **Digibot** – a chatbot on the DBS website and mobile app.  
+* **Message Us** – a web‑based messaging service for non‑urgent queries.
+
+> *Source: DBS contact page information (summarised in the knowledge base).*
+
+---
+**Retrieved policy sources**
+- `02_dbs_fraud_reporting.md` (chunk 12, cosine similarity: 0.626)
+- `02_dbs_fraud_reporting.md` (chunk 11, cosine similarity: 0.611)
+- `02_dbs_fraud_reporting.md` (chunk 10, cosine similarity: 0.520)
+
+*Similarity scores indicate retrieval relevance, not answer correctness.*",True,False,False,True,"02_dbs_fraud_reporting.md (chunk 12, score 0.626); 02_dbs_fraud_reporting.md (chunk 11, score 0.611); 02_dbs_fraud_reporting.md (chunk 10, score 0.520)",True,,,"Selected demo customer: CUST001
+Starting LLM agent loop...
+
+--- LLM round 1 ---
+Finish reason: tool_calls
+
+TOOL CALL #1
+Selected tool: search_policies
+Raw arguments: {""question"":""DBS contact channels for general enquiries""}
+Tool result: SUCCESS
+Passages returned: 3
+
+--- LLM round 2 ---
+Finish reason: stop
+Tool call requested: No
+LLM produced a final answer.
+
+Total tool calls executed: 1
+
+Policy chunks retrieved:
+- 02_dbs_fraud_reporting.md | chunk 12 | similarity 0.626
+- 02_dbs_fraud_reporting.md | chunk 11 | similarity 0.611
+- 02_dbs_fraud_reporting.md | chunk 10 | similarity 0.520"
