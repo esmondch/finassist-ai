@@ -3,5 +3,4 @@ gradio
 python-dotenv
 sentence-transformers
 faiss-cpu
-pandas
 pytest

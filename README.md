@@ -31,7 +31,7 @@ source .venv/bin/activate
 ### 2. Install dependencies
 
 ```bash
-pip install groq gradio python-dotenv sentence-transformers faiss-cpu pandas pytest
+pip install groq gradio python-dotenv sentence-transformers faiss-cpu pytest
 ```
 
 ### 3. Configure the API key
@@ -124,7 +124,6 @@ Evaluation results are saved separately to support comparison between different 
 | Vector database | FAISS |
 | Transaction database | SQLite |
 | User interface | Gradio |
-| Data processing | Pandas |
 
 ## Limitations and Disclaimer
 
