@@ -1,6 +1,7 @@
 
 import csv
 import re
+import time
 from datetime import datetime
 
 from app import respond
@@ -51,7 +52,12 @@ TEST_CASES = [
 # --------------------------------------------------
 
 CUSTOMER_ID = "CUST001"
+
 OUTPUT_FILE = "answer_evaluation_results.csv"
+
+# Delay between completed test cases.
+# Increase to 15-20 seconds if TPM errors continue.
+REQUEST_DELAY_SECONDS = 15
 
 
 # --------------------------------------------------
@@ -66,10 +72,11 @@ def evaluate_answers():
 
     print(f"\nSelected demo customer: {CUSTOMER_ID}")
     print(f"Total test cases: {len(TEST_CASES)}")
+    print(f"Delay between requests: {REQUEST_DELAY_SECONDS} seconds")
 
     results = []
 
-    for case in TEST_CASES:
+    for index, case in enumerate(TEST_CASES):
 
         test_id = case["id"]
         query = case["query"]
@@ -143,11 +150,12 @@ def evaluate_answers():
                 "PASS" if tool_pass else "FAIL",
             )
 
-            # Save results for later manual grounding assessment.
+            # Save successful execution results.
             results.append({
                 "test_id": test_id,
                 "query": query,
                 "answer": answer,
+                "execution_status": "SUCCESS",
                 "policy_tool_called": policy_tool_called,
                 "transaction_tool_called": transaction_tool_called,
                 "safety_gate_used": safety_gate_used,
@@ -164,24 +172,49 @@ def evaluate_answers():
 
         except Exception as exc:
 
-            print(
-                f"\nERROR: {type(exc).__name__}: {exc}"
+            error_message = f"{type(exc).__name__}: {exc}"
+
+            # Identify API rate-limit errors separately.
+            is_rate_limit = (
+                "429" in str(exc)
+                or "RateLimitError" in type(exc).__name__
+                or "rate_limit_exceeded" in str(exc)
             )
 
+            if is_rate_limit:
+                execution_status = "RATE_LIMIT_ERROR"
+            else:
+                execution_status = "EXECUTION_ERROR"
+
+            print(f"\nERROR: {error_message}")
+            print(f"Execution status: {execution_status}")
+
+            # Do not treat an API failure as a retrieval failure.
             results.append({
                 "test_id": test_id,
                 "query": query,
                 "answer": "",
-                "policy_tool_called": False,
-                "transaction_tool_called": False,
-                "safety_gate_used": False,
-                "policy_chunks_found": False,
+                "execution_status": execution_status,
+                "policy_tool_called": "",
+                "transaction_tool_called": "",
+                "safety_gate_used": "",
+                "policy_chunks_found": "",
                 "retrieved_sources": "",
-                "tool_retrieval_pass": False,
+                "tool_retrieval_pass": "",
                 "grounding_score": "",
-                "reviewer_notes": f"Execution error: {exc}",
+                "reviewer_notes": error_message,
                 "developer_trace": "",
             })
+
+        # Wait between test cases to reduce TPM pressure.
+        if index < len(TEST_CASES) - 1:
+
+            print(
+                f"\nWaiting {REQUEST_DELAY_SECONDS} seconds "
+                "before the next test..."
+            )
+
+            time.sleep(REQUEST_DELAY_SECONDS)
 
     # --------------------------------------------------
     # 4. Save CSV Results
@@ -210,36 +243,67 @@ def evaluate_answers():
 
     total = len(results)
 
-    passed = sum(
+    successful = sum(
         1 for result in results
-        if result["tool_retrieval_pass"]
+        if result["execution_status"] == "SUCCESS"
     )
 
-    failed = total - passed
+    rate_limit_errors = sum(
+        1 for result in results
+        if result["execution_status"] == "RATE_LIMIT_ERROR"
+    )
+
+    execution_errors = sum(
+        1 for result in results
+        if result["execution_status"] == "EXECUTION_ERROR"
+    )
+
+    passed = sum(
+        1 for result in results
+        if result["tool_retrieval_pass"] is True
+    )
+
+    failed = sum(
+        1 for result in results
+        if result["tool_retrieval_pass"] is False
+    )
 
     print("\n" + "=" * 70)
     print("ANSWER EVALUATION SUMMARY")
     print("=" * 70)
 
     print(f"Total tests: {total}")
-    print(f"Tool and retrieval passed: {passed}")
+    print(f"Successful executions: {successful}")
+    print(f"Rate-limit errors: {rate_limit_errors}")
+    print(f"Other execution errors: {execution_errors}")
+
+    print(f"\nTool and retrieval passed: {passed}")
     print(f"Tool and retrieval failed: {failed}")
 
-    print(
-        "Tool and retrieval pass rate: "
-        f"{passed / total * 100:.2f}%"
-    )
+    if successful > 0:
+        print(
+            "Tool and retrieval pass rate among successful tests: "
+            f"{passed / successful * 100:.2f}%"
+        )
+    else:
+        print("No successful executions to calculate pass rate.")
 
     print("\nIndividual results:")
 
     for result in results:
-        status = (
-            "PASS"
-            if result["tool_retrieval_pass"]
-            else "FAIL"
-        )
 
-        print(f"{result['test_id']}: {status}")
+        status = result["execution_status"]
+
+        if status == "SUCCESS":
+            result_label = (
+                "PASS"
+                if result["tool_retrieval_pass"]
+                else "FAIL"
+            )
+        else:
+            result_label = status
+
+        print(f"{result['test_id']}: {result_label}")
 
     print(f"\nResults saved to: {OUTPUT_FILE}")
     print("=" * 70)

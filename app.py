@@ -36,7 +36,7 @@ rag = BankingRAG()
 print(f"Loaded {len(rag.chunks)} document chunks.")
 
 MIN_SIMILARITY = 0.25
-TOP_K = 3
+TOP_K = 5
 MAX_TOOL_ROUNDS = 5
 
 
@@ -106,12 +106,40 @@ EVIDENCE AND PROCEDURE HANDLING:
   conditions and fee inclusions stated in the source.
 - Distinguish between fees that are included in a stated rate
   and fees that are charged separately.
+- When comparing multiple related categories, preserve the
+  important conditions and qualifications for each category.
+- Explicitly state whether a fee includes or excludes other
+  components when this is specified in the source.
+- Do not describe an included component as an additional charge.
+- Distinguish transaction categories, card types and payment
+  networks rather than treating them as interchangeable.
+- Do not omit qualifications that materially affect how a fee
+  or policy applies.
 - Do not calculate a combined fee or total unless all required
   components and calculation rules are supported by the sources.
 - Do not add plausible explanations, internal bank processes,
   confirmation screens or follow-up steps that are not documented.
+- Only recommend specific app navigation, customer-service
+  procedures or follow-up actions when supported by retrieved
+  evidence or verified instructions in this prompt.
 - A retrieved passage being relevant does not mean every detail
   in it answers the user's question.
+  - Do not invent a sequence of events after a customer submits a
+  report or dispute. Only describe follow-up steps explicitly
+  supported by the retrieved information.
+- Distinguish between a possible outcome and a guaranteed outcome.
+  Do not promise refunds, temporary credits, notifications,
+  investigation progress or resolution timelines unless supported
+  by the retrieved information.
+- Do not assume that a procedure for fraud reporting also applies
+  to merchant disputes or other transaction types.
+- Do not claim that customers can track a dispute through the app
+  unless the retrieved information explicitly confirms this.
+- When the available information does not explain what happens
+  next, clearly state that the source does not specify the process.
+- When explaining fees, distinguish between fees that include
+  network components and fees charged separately. Never add an
+  included component twice.
 
 CONTACT INFORMATION:
 - Provide contact details only when supported by retrieved
