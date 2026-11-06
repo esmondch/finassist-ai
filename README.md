@@ -13,6 +13,9 @@ FinAssist AI uses a Large Language Model (LLM) to answer banking-related questio
 - **Safety and grounding instructions:** Guides the chatbot to avoid unsupported banking claims, protect sensitive information and communicate its limitations.
 - **Evaluation framework:** Includes retrieval and answer evaluation to assess retrieval performance and the factual grounding of generated responses.
 - **Gradio interface:** Provides an interactive chatbot interface for testing the prototype.
+- - **Conversation memory:** Maintains conversational context across multiple messages, allowing users to ask follow-up questions without repeating information.
+- **Customer session isolation:** Clears conversation history when switching demo customers to prevent cross-customer context leakage.
+- **Token usage monitoring:** Displays LLM context-window usage and approximate remaining capacity in the developer trace.
 
 ## Requirements
 
@@ -22,6 +25,15 @@ FinAssist AI uses a Large Language Model (LLM) to answer banking-related questio
 ## Setup and Installation
 
 ### 1. Create a virtual environment
+
+**Windows (PowerShell):**
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+**macOS / Linux:**
 
 ```bash
 python3.12 -m venv .venv
@@ -71,8 +83,7 @@ finassist-ai/
 ├── evaluate_answers.py     # End-to-end answer evaluation
 │
 ├── data/
-│   ├── banking_faqs.md     # Demonstration banking FAQs (removed)
-│   ├── banking_policies.md # Demonstration banking policies (removed)
+│   ├── 01_dbs_card_faqs.md
 │   ├── 02_dbs_fraud_reporting.md
 │   ├── 03_dbs_transaction_disputes.md
 │   ├── 04_dbs_lost_stolen_cards.md
@@ -82,6 +93,7 @@ finassist-ai/
 ├── evaluations/             # Evaluation datasets and results
 │
 ├── .env                     # API credentials (not committed)
+├── SOURCE_REGISTER.md       # official sources used for the RAG knowledge base.
 └── README.md
 ```
 
@@ -97,11 +109,14 @@ Evaluates whether the RAG system retrieves relevant knowledge-base passages for 
 
 **2. Answer Evaluation (`evaluate_answers.py`)**
 
-Evaluates the chatbot's end-to-end responses, including:
-- Whether the appropriate tool was called.
-- Whether relevant policy passages were retrieved.
-- Whether generated answers remain grounded in the retrieved information.
-- Whether unsupported claims or inaccuracies appear in the responses.
+Evaluates the chatbot's end-to-end responses through:
+
+- Automated checks for appropriate tool invocation.
+- Verification that relevant policy passages were retrieved.
+- Recorded responses and developer traces for inspection.
+- Manual assessment of factual grounding, unsupported claims and inaccuracies.
+
+Baseline and final evaluation results are retained for comparison.
 
 Run the evaluation scripts:
 
@@ -115,7 +130,7 @@ Evaluation results are saved separately to support comparison between different 
 ## Technologies Used
 
 | Component | Technology |
-|---|---|
+| --- | --- |
 | Programming language | Python 3.12 |
 | LLM provider | Groq API |
 | Language model | OpenAI GPT-OSS 20B (via Groq) |
