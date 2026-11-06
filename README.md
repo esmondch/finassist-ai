@@ -93,6 +93,7 @@ finassist-ai/
 ├── evaluations/             # Evaluation datasets and results
 │
 ├── .env                     # API credentials (not committed)
+├── test_groq.py
 ├── SOURCE_REGISTER.md       # official sources used for the RAG knowledge base.
 └── README.md
 ```
