@@ -31,7 +31,7 @@ source .venv/bin/activate
 ### 2. Install dependencies
 
 ```bash
-pip install groq gradio python-dotenv sentence-transformers faiss-cpu pytest
+python -m pip install -r requirements.txt
 ```
 
 ### 3. Configure the API key
