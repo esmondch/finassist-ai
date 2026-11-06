@@ -22,6 +22,8 @@ load_dotenv()
 
 API_KEY = os.getenv("GROQ_API_KEY")
 MODEL = "openai/gpt-oss-20b"
+CONTEXT_WINDOW = 131_072
+MAX_OUTPUT_TOKENS = 1500
 
 if not API_KEY:
     raise RuntimeError("GROQ_API_KEY is missing. Check your .env file.")
@@ -553,11 +555,35 @@ def respond(message, history, customer_id):
 
     trace.append(f"Selected demo customer: {customer_id}")
     trace.append("Starting LLM agent loop...")
+    usage_trace_index = len(trace)
+    trace.extend([
+        "Context usage: unavailable (no LLM usage received).",
+        "Approximate remaining context capacity: unavailable.",
+        "Context-window usage for the latest LLM request; "
+        "Groq API rate limits are separate.",
+    ])
 
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": question},
-    ]
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    for turn in history or []:
+        # Gradio uses role/content messages; also accept legacy turn pairs.
+        if isinstance(turn, dict):
+            entries = [(turn.get("role"), turn.get("content"))]
+        else:
+            entries = zip(("user", "assistant"), turn)
+        for role, content in entries:
+            if role not in ("user", "assistant") or content is None:
+                continue
+            # Gradio can represent text as a list of content blocks.
+            if isinstance(content, list):
+                content = "\n".join(
+                    part if isinstance(part, str) else part.get("text", "")
+                    for part in content
+                    if isinstance(part, str)
+                    or (isinstance(part, dict) and part.get("type") == "text")
+                )
+            if isinstance(content, str):
+                messages.append({"role": role, "content": content})
+    messages.append({"role": "user", "content": question})
 
     retrieved_sources = []
     tool_call_count = 0
@@ -570,8 +596,29 @@ def respond(message, history, customer_id):
                 tools=TOOLS,
                 tool_choice="auto",
                 temperature=0.2,
-                max_tokens=1500,
+                max_tokens=MAX_OUTPUT_TOKENS,
             )
+
+            prompt_tokens = getattr(
+                getattr(response, "usage", None), "prompt_tokens", None
+            )
+            if prompt_tokens is None:
+                trace[usage_trace_index] = (
+                    "Context usage: unavailable (Groq did not return prompt usage)."
+                )
+                trace[usage_trace_index + 1] = (
+                    "Approximate remaining context capacity: unavailable."
+                )
+            else:
+                trace[usage_trace_index] = (
+                    f"Context usage: {prompt_tokens:,} / {CONTEXT_WINDOW:,} tokens "
+                    f"({prompt_tokens / CONTEXT_WINDOW:.1%})"
+                )
+                remaining = max(0, CONTEXT_WINDOW - prompt_tokens - MAX_OUTPUT_TOKENS)
+                trace[usage_trace_index + 1] = (
+                    f"Approximate remaining context capacity: {remaining:,} tokens "
+                    f"(after reserving {MAX_OUTPUT_TOKENS:,} output tokens)."
+                )
 
             assistant_message = response.choices[0].message
 
@@ -1094,7 +1141,7 @@ with gr.Blocks(
                 render=False,
             )
  
-            gr.ChatInterface(
+            chat_interface = gr.ChatInterface(
                 fn=respond,
                 chatbot=gr.Chatbot(
                     height=440,
@@ -1104,6 +1151,30 @@ with gr.Blocks(
                 additional_outputs=[trace_box],
                 examples=EXAMPLES,
                 cache_examples=False,
+            )
+
+            # Clear both the visible chat and Gradio's internal conversation state.
+            customer_dropdown.change(
+                fn=lambda: ([], [], [], None, gr.update(value="", interactive=True), ""),
+                inputs=None,
+                outputs=[
+                    chat_interface.chatbot,
+                    chat_interface.chatbot_state,
+                    chat_interface.chatbot_value,
+                    chat_interface.saved_input,
+                    chat_interface.textbox,
+                    trace_box,
+                ],
+                queue=False,
+                # Discard pending replies/updates from the previous customer.
+                cancels=[
+                    event.get_config()
+                    for event in demo.fns.values()
+                    if event.queue and (
+                        chat_interface.chatbot in event.outputs
+                        or chat_interface.chatbot_state in event.outputs
+                    )
+                ],
             )
  
     with gr.Accordion(
@@ -1123,6 +1194,7 @@ with gr.Blocks(
  
  
 if __name__ == "__main__":
+    demo.queue()
     demo.launch(
         theme=gr.themes.Base(
             primary_hue="teal",
